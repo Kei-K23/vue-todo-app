@@ -1,14 +1,12 @@
 <script setup>
 import { ref } from "vue";
 
-let id = 0;
 const emit = defineEmits(["addTask"]);
 
 const task = ref();
 
 function onSubmit() {
   emit("addTask", {
-    id: id++,
     name: task.value,
     completed: false,
     createdAt: new Date().getTime(),
@@ -19,12 +17,12 @@ function onSubmit() {
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit">
+  <form @submit.prevent="onSubmit" class="flex items-center justify-center">
     <input
       type="text"
       v-model="task"
       placeholder="What needs to be done?"
-      class="input input-bordered w-full max-w-xs"
+      class="w-full input input-bordered"
     />
   </form>
 </template>
