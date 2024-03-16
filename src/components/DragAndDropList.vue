@@ -6,6 +6,8 @@ import draggable from "vuedraggable";
 
 const isEdit = ref(0);
 const newEditTask = ref("");
+const showTrash = ref(false);
+const draggableItem = ref({});
 
 const emit = defineEmits([
   "onChangeAdd",
@@ -48,7 +50,6 @@ function deleteTask(task) {
 }
 
 function onUpdateSubmit() {
-  console.log(newEditTask.value);
   if (!newEditTask.value) return;
   emit("editTask", isEdit.value, newEditTask.value);
   isEdit.value = 0;
@@ -58,6 +59,11 @@ function onUpdateSubmit() {
 function isEditingTask(task) {
   isEdit.value = task.createdAt;
   newEditTask.value = task.name;
+}
+
+function onBlur() {
+  isEdit.value = 0;
+  newEditTask.value = "";
 }
 </script>
 <template>
@@ -73,6 +79,7 @@ function isEditingTask(task) {
     >
       <template #item="{ element }">
         <div
+          :id="element"
           :class="
             cn(
               'group select-none flex items-center gap-3 justify-between px-4 py-3 text-black transition-all duration-150 rounded-lg cursor-pointer bg-emerald-600 hover:rounded-md',
@@ -83,6 +90,8 @@ function isEditingTask(task) {
           <template v-if="isEdit === element.createdAt">
             <form class="w-full" @submit.prevent="onUpdateSubmit">
               <input
+                autofocus
+                @blur="onBlur"
                 type="text"
                 v-model="newEditTask"
                 class="w-full bg-transparent input border-emerald-800 focus:border-emerald-800 focus:ring-emerald-700"
