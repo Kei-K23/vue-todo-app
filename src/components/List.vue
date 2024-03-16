@@ -1,25 +1,32 @@
 <script setup>
+import { cn } from "@/utils/cn";
+
 const props = defineProps({
   tasks: Array,
 });
 </script>
 <template>
-  <ul>
-    <li v-for="task in tasks" :key="task.createdAt">
+  <ul class="mt-4 space-y-3">
+    <li
+      v-for="task in tasks"
+      :key="task.createdAt"
+      :class="
+        cn(
+          'select-none flex items-center gap-3 px-4 py-2 text-black transition-all duration-150 rounded-lg cursor-pointer bg-emerald-600 hover:rounded-md',
+          task.completed && 'bg-emerald-800 cursor-default'
+        )
+      "
+    >
       <input
         type="checkbox"
         v-model="task.completed"
-        class="checkbox checkbox-success"
+        class="checkbox bg-slate-300"
       />
-      <span :class="{ completed: task.completed }">
+      <span :class="cn('text-lg font-bold', task.completed && 'line-through')">
         {{ task.name }}
       </span>
     </li>
   </ul>
 </template>
 
-<style scoped>
-.completed {
-  @apply line-through;
-}
-</style>
+<style scoped></style>
