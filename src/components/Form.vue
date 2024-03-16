@@ -6,6 +6,7 @@ const emit = defineEmits(["addTask"]);
 const task = ref();
 
 function onSubmit() {
+  if (!task.value) return;
   emit("addTask", {
     name: task.value,
     completed: false,

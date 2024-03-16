@@ -7,7 +7,7 @@ const props = defineProps({
 </script>
 <template>
   <ul class="mt-4 space-y-3">
-    <li
+    <div
       v-for="task in tasks"
       :key="task.createdAt"
       :class="
@@ -25,7 +25,7 @@ const props = defineProps({
       <span :class="cn('text-lg font-bold', task.completed && 'line-through')">
         {{ task.name }}
       </span>
-    </li>
+    </div>
   </ul>
 </template>
 
