@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from "vue";
 import Form from "./components/Form.vue";
-import List from "./components/List.vue";
 import DragAndDropList from "./components/DragAndDropList.vue";
 const tasks = ref([]);
 const completedTasks = ref([]);
@@ -41,6 +40,33 @@ function onChangeForTask(allNotCompleted) {
     }));
   }
 }
+
+function deleteTask(task) {
+  if (task.completed) {
+    completedTasks.value = completedTasks.value.filter(
+      (t) => t.createdAt !== task.createdAt
+    );
+    return;
+  } else {
+    tasks.value = tasks.value.filter((t) => t.createdAt !== task.createdAt);
+    return;
+  }
+}
+
+function onUpdateSubmit(isEdit, newEditTask) {
+  if (!newEditTask) return;
+
+  tasks.value = tasks.value.map((t) => {
+    if (t.createdAt === isEdit) {
+      return {
+        ...t,
+        name: newEditTask,
+      };
+    } else {
+      return t;
+    }
+  });
+}
 </script>
 
 <template>
@@ -53,14 +79,12 @@ function onChangeForTask(allNotCompleted) {
       <DragAndDropList
         :tasks
         :completed-tasks="completedTasks"
-        @on-change-add="(t) => addCompletedTasks(t)"
-        @on-change-remove="(t) => removeCompletedTasks(t)"
-        @on-change-for-completed-task="
-          (allCompleted) => onChangeForCompletedTask(allCompleted)
-        "
-        @on-change-for-task="
-          (allNotCompleted) => onChangeForTask(allNotCompleted)
-        "
+        @on-change-add="addCompletedTasks"
+        @on-change-remove="removeCompletedTasks"
+        @on-change-for-completed-task="onChangeForCompletedTask"
+        @on-change-for-task="onChangeForTask"
+        @delete-task="deleteTask"
+        @edit-task="onUpdateSubmit"
       />
     </div>
   </main>
