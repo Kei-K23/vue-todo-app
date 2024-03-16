@@ -55,3 +55,5 @@ npm run dev
 - `Edit Task`: Double-click on a task name to edit it inline. Press Enter or click outside the input field to save changes.
 
 Feel free to customize and extend this Vue todo application according to your needs. If you have any questions or suggestions, please feel free to reach out. Happy coding! 🚀
+
+Live demo [Vue Todo App](https://vue-todo-app-beige.vercel.app)
