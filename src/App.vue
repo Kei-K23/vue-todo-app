@@ -33,8 +33,8 @@ function onChangeForCompletedTask(allCompleted) {
   }
 }
 
-function onChangeForTask(t) {
-  if (!t) {
+function onChangeForTask(allNotCompleted) {
+  if (!allNotCompleted) {
     tasks.value = tasks.value.map((task) => ({
       ...task,
       completed: false,
@@ -58,7 +58,9 @@ function onChangeForTask(t) {
         @on-change-for-completed-task="
           (allCompleted) => onChangeForCompletedTask(allCompleted)
         "
-        @on-change-for-task="(t) => onChangeForTask(t)"
+        @on-change-for-task="
+          (allNotCompleted) => onChangeForTask(allNotCompleted)
+        "
       />
     </div>
   </main>
